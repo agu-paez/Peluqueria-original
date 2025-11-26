@@ -5,30 +5,26 @@ Django settings for Peluqueria_Web project.
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ==========================
-#  SEGURIDAD / ENTORNO
-# ==========================
+# =======================
+#  SECURITY / ENVIRONMENT
+# =======================
 
-# En local, si no hay variable de entorno, usa la clave de siempre.
-# En Render, le vas a pasar SECRET_KEY por Environment Variables.
 SECRET_KEY = os.environ.get(
     "SECRET_KEY",
     "django-insecure-11mkq_v4+p(k#-#8dpp+9nny0l+-#*%g#el(d_=aqg18y3!#om"
 )
 
-# En local: DEBUG=True (porque no vas a setear DEBUG en el entorno)
-# En Render: ponés DEBUG=False en las variables de entorno
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-# En local: 127.0.0.1 y localhost
-# En Render: ALLOWED_HOSTS = .onrender.com
-ALLOWED_HOSTS = ["*"]
+# para asegurarnos que Render funcione:
+ALLOWED_HOSTS = ["*"]   # luego lo ajustamos, pero así FUNCIONA seguro
 
 
-# Application definition
+# =======================
+#      APPLICATIONS
+# =======================
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -37,11 +33,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'turnos',
 ]
 
+# =======================
+#       MIDDLEWARE
+# =======================
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    # WhiteNoise para servir archivos estáticos en producción
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -51,6 +56,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Peluqueria_Web.urls'
+
+# =======================
+#       TEMPLATES
+# =======================
 
 TEMPLATES = [
     {
@@ -69,13 +78,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Peluqueria_Web.wsgi.application'
 
-# Database (por ahora sqlite, para Render sirve para probar)
+
+# =======================
+#     DATABASE (sqlite)
+# =======================
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -92,28 +106,33 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 LANGUAGE_CODE = 'es'
 TIME_ZONE = 'America/Buenos_Aires'
 USE_I18N = True
 USE_TZ = True
 
-# ==========================
-#  ESTÁTICOS
-# ==========================
+
+# =======================
+#      STATIC FILES
+# =======================
 
 STATIC_URL = 'static/'
 
-# dónde están tus archivos estáticos en desarrollo
+# Carpeta de desarrollo
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# carpeta a la que collectstatic va a copiar todo para producción (Render)
+# Carpeta a la que collectstatic exporta en producción
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# WhiteNoise storage (archivos comprimidos/caché)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
