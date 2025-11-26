@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar turno · Peluquería Ivon{% endblock %}
+
+{% block content %}
+<h1>Eliminar turno</h1>
+
+<p>¿Seguro que querés eliminar este turno?</p>
+<ul>
+    <li><strong>Fecha:</strong> {{ turno.fecha|date:"d/m/Y" }}</li>
+    <li><strong>Hora:</strong> {{ turno.hora }}</li>
+    <li><strong>Cliente:</strong> {{ turno.nombre }}</li>
+    <li><strong>Servicio:</strong> {{ turno.desc }}</li>
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Sí, eliminar</button>
+    <a href="/">Cancelar</a>
+</form>
+{% endblock %}

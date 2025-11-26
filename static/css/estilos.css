@@ -522,3 +522,67 @@ table.cal td.day.has-turnos {
         height: 2rem;
     }
 }
+.turnos-admin {
+    margin-top: 2rem;
+    border: 1px solid #333;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: #121212;
+}
+
+.turnos-admin h2 {
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+}
+
+.tabla-turnos {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.tabla-turnos th,
+.tabla-turnos td {
+    padding: 0.35rem 0.4rem;
+    border-bottom: 1px solid #222;
+}
+
+.tabla-turnos th {
+    text-align: left;
+    color: #bbbbbb;
+    font-weight: 500;
+}
+
+.tabla-turnos tr:nth-child(even) {
+    background: #151515;
+}
+
+.tabla-turnos tr:hover {
+    background: #1d1d1d;
+}
+
+.tabla-turnos .acciones {
+    white-space: nowrap;
+}
+
+.btn-link {
+    color: var(--gold);
+    text-decoration: none;
+    margin-right: 0.4rem;
+    font-size: 0.8rem;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+.btn-danger {
+    background: #661111;
+    border: none;
+    border-radius: 999px;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    color: #fff;
+    cursor: pointer;
+}
+

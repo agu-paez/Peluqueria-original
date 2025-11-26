@@ -13,13 +13,53 @@
         <h1 class="hero-title">Turnos Peluquería Ivon</h1>
         <p class="hero-sub">
             Tocá un día del calendario para ver los turnos de esa fecha.
-            En computadora tenés el formulario a la derecha.
-            En celular lo vas a ver dentro de la ventana del día.
         </p>
     </div>
 </section>
 
 <div class="cal-container">
+    {% if puede_editar %}
+<section class="turnos-admin">
+    <h2>Turnos del mes</h2>
+    <table class="tabla-turnos">
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Cliente</th>
+                <th>Servicio / nota</th>
+                <th>Seña</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for t in turnos_mes %}
+            <tr>
+                <td>{{ t.fecha|date:"d/m/Y" }}</td>
+                <td>{{ t.hora }}</td>
+                <td>{{ t.nombre }}</td>
+                <td>{{ t.desc }}</td>
+                <td>${{ t.sena }}</td>
+                <td class="acciones">
+                    <a class="btn-link" href="{% url 'editar_turno' t.id %}">Editar</a>
+
+                    <form action="{% url 'eliminar_turno' t.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-danger"
+                                onclick="return confirm('¿Eliminar este turno?');">
+                            Eliminar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="6">No hay turnos registrados este mes.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endif %}
+
     <!-- Calendario -->
     <div class="calendar">
         <div class="cal-header">
@@ -57,6 +97,7 @@
             </tbody>
         </table>
     </div>
+
 
     {% if puede_editar %}
     <!-- Panel formulario (solo PC, en celu se oculta con CSS) -->
