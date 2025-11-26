@@ -25,12 +25,7 @@ DEBUG = os.environ.get("DEBUG", "True") == "True"
 
 # En local: 127.0.0.1 y localhost
 # En Render: ALLOWED_HOSTS = .onrender.com
-ALLOWED_HOSTS = [
-    'peluqueria-original.onrender.com',
-    '.onrender.com',
-    'localhost',
-    '127.0.0.1',
-]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
