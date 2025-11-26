@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar sesión · Peluquería Ivon{% endblock %}
+
+{% block content %}
+<main style="max-width: 400px; margin: 3rem auto; padding: 1.5rem; border: 1px solid #333; border-radius: 1rem; background:#121212;">
+    <h1 style="font-size:1.4rem; margin-bottom:1rem;">Iniciar sesión</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div style="margin-bottom:0.7rem;">
+            <label for="{{ form.username.id_for_label }}">Usuario</label><br>
+            {{ form.username }}
+        </div>
+
+        <div style="margin-bottom:0.7rem;">
+            <label for="{{ form.password.id_for_label }}">Contraseña</label><br>
+            {{ form.password }}
+        </div>
+
+        <button type="submit" style="margin-top:0.5rem; padding:0.5rem 1.2rem; border-radius:999px; border:none; cursor:pointer; background:linear-gradient(135deg, var(--gold), var(--gold-dark)); color:#000; font-weight:600;">
+            Entrar
+        </button>
+    </form>
+</main>
+{% endblock content %}

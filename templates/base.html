@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Peluquería Ivon{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
+</head>
+<body>
+<header class="site-header">
+    <div class="navbar">
+        <div class="brand">
+            <div class="brand-logo">IB</div>
+            <div class="brand-text">
+                <span>PELUQUERÍA</span>
+                <span>Ivon Bodnar</span>
+            </div>
+        </div>
+
+        <!-- MENÚ DESKTOP -->
+        <nav class="nav-desktop">
+            <a href="{% url 'turnos' %}">Inicio</a>
+            <a href="#">Servicios</a>
+            <a href="{% url 'turnos' %}">Turnos</a>
+            <a href="#">Contacto</a>
+
+            {% if user.is_authenticated %}
+                <span class="nav-user">Hola, {{ user.username }}</span>
+                <a href="{% url 'logout' %}">Salir</a>
+            {% else %}
+                <a href="{% url 'login' %}">Ingresar</a>
+            {% endif %}
+        </nav>
+
+        <!-- BOTÓN HAMBURGUESA (SOLO CELU POR CSS) -->
+        <button class="burger" id="burger-btn">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+
+    <!-- MENÚ MOBILE DESPLEGABLE -->
+    <div class="mobile-menu" id="mobile-menu">
+        <nav>
+            <a href="{% url 'turnos' %}">Inicio</a>
+            <a href="#">Servicios</a>
+            <a href="{% url 'turnos' %}">Turnos</a>
+            <a href="#">Contacto</a>
+
+            {% if user.is_authenticated %}
+                <span class="nav-user">Hola, {{ user.username }}</span>
+                <a href="{% url 'logout' %}">Salir</a>
+            {% else %}
+                <a href="{% url 'login' %}">Ingresar</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    &copy; {{ now|date:"Y" }} Peluquería Ivon Bodnar
+</footer>
+
+<script>
+    const burgerBtn = document.getElementById('burger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (burgerBtn && mobileMenu) {
+        burgerBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        mobileMenu.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                mobileMenu.classList.remove('open');
+            }
+        });
+    }
+</script>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

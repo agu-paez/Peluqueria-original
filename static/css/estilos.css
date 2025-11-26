@@ -1,0 +1,564 @@
+:root {
+    --gold: #f1c15b;
+    --gold-dark: #d79f30;
+    --bg: #111111;
+    --text: #f7f7f7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+header {
+    border-bottom: 1px solid #333;
+    background: #000000e0;
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.brand-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: radial-gradient(circle at 30% 20%, #ffe9b3, var(--gold-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #000;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.brand-text span:first-child {
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #bbbbbb;
+}
+
+.brand-text span:last-child {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+nav a {
+    color: #dddddd;
+    margin-left: 1.2rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+    transition: width 0.2s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+.link-button {
+    background: none;
+    border: none;
+    color: #dddddd;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1.8rem 1.5rem 3rem;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+    gap: 2rem;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.hero-title {
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+}
+
+.hero-sub {
+    color: #cccccc;
+    margin-bottom: 1.2rem;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid #333;
+    font-size: 0.8rem;
+    color: #bbbbbb;
+    margin-bottom: 0.8rem;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--gold);
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+}
+
+.btn-main,
+.btn-ghost {
+    padding: 0.6rem 1.3rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.btn-main {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000;
+    font-weight: 600;
+}
+
+.btn-ghost {
+    background: transparent;
+    color: #dddddd;
+    border: 1px solid #444;
+}
+
+.hero-card {
+    border-radius: 1.2rem;
+    border: 1px solid #333;
+    padding: 1.2rem 1.1rem;
+    background: radial-gradient(circle at top, #1b1b1b, #050505);
+}
+
+.hero-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+}
+
+.hero-card p {
+    font-size: 0.85rem;
+    color: #bbbbbb;
+}
+
+footer {
+    border-top: 1px solid #222;
+    padding: 1rem 1.5rem 1.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #777;
+}
+
+footer a {
+    color: var(--gold);
+    text-decoration: none;
+}
+
+/* ---------- CALENDARIO Y FORM PANEL ---------- */
+
+.cal-container {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+    gap: 2rem;
+}
+
+.calendar {
+    border: 1px solid #333;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: #121212;
+}
+
+.cal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.cal-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.cal-nav-btn {
+    background: transparent;
+    border: 1px solid #444;
+    border-radius: 999px;
+    padding: .2rem .6rem;
+    color: #ddd;
+    cursor: pointer;
+    font-size: .8rem;
+}
+
+table.cal {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .85rem;
+    text-align: center;
+}
+
+table.cal th {
+    padding: .3rem 0;
+    font-weight: 500;
+    color: #bbbbbb;
+}
+
+table.cal td {
+    height: 2.3rem;
+    border-radius: .6rem;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+table.cal td.empty {
+    cursor: default;
+}
+
+table.cal td.day {
+    transition: background .15s ease, transform .1s ease;
+}
+
+table.cal td.day:hover {
+    background: #1f1f1f;
+    transform: translateY(-1px);
+}
+
+table.cal td.day.has-turnos {
+    background: rgba(241, 193, 91, .12);
+    outline: 1px solid #3b2c08;
+}
+
+table.cal td.today {
+    border: 1px solid var(--gold);
+}
+
+/* Panel formulario */
+
+.panel-form {
+    border: 1px solid #333;
+    border-radius: 1rem;
+    padding: 1rem;
+    background: #121212;
+}
+
+.panel-form h2 {
+    font-size: 1rem;
+    margin-bottom: .6rem;
+}
+
+.panel-form form {
+    font-size: .9rem;
+}
+
+.panel-form label {
+    display: block;
+    margin-top: .5rem;
+    margin-bottom: .15rem;
+    color: #cccccc;
+}
+
+.panel-form input,
+.panel-form textarea {
+    width: 100%;
+    padding: .35rem .5rem;
+    border-radius: .4rem;
+    border: 1px solid #444;
+    background: #181818;
+    color: #eee;
+    font-size: .85rem;
+}
+
+.panel-form textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.panel-form button {
+    margin-top: .8rem;
+    padding: .5rem 1.2rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: .9rem;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000;
+    font-weight: 600;
+}
+
+/* Modal turnos día */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.modal-backdrop.show {
+    display: flex;
+}
+
+.modal {
+    background: #111;
+    border-radius: 1rem;
+    border: 1px solid #333;
+    max-width: 420px;
+    width: 100%;
+    padding: 1rem 1.1rem;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.modal-title {
+    font-size: .95rem;
+    font-weight: 600;
+}
+
+.modal-close {
+    border: none;
+    background: transparent;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.turno-item {
+    border-radius: .5rem;
+    border: 1px solid #333;
+    padding: .4rem .6rem;
+    font-size: .85rem;
+    margin-bottom: .35rem;
+}
+
+.turno-item strong {
+    color: var(--gold);
+}
+
+.turno-empty {
+    font-size: .85rem;
+    color: #999;
+    font-style: italic;
+    margin-top: .3rem;
+}
+.btn-modal-register {
+    margin-top: 0.6rem;
+    width: 100%;
+    padding: 0.5rem 0.8rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000;
+    font-weight: 600;
+}
+
+.modal-form {
+    margin-top: 0.7rem;
+    border-top: 1px solid #333;
+    padding-top: 0.6rem;
+    display: none; /* se muestra al tocar el botón */
+}
+
+.modal-form label {
+    display: block;
+    margin-top: 0.4rem;
+    margin-bottom: 0.15rem;
+    font-size: 0.8rem;
+    color: #cccccc;
+}
+
+.modal-form input,
+.modal-form textarea {
+    width: 100%;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.4rem;
+    border: 1px solid #444;
+    background: #181818;
+    color: #eee;
+    font-size: 0.8rem;
+}
+
+.modal-form textarea {
+    resize: vertical;
+    min-height: 50px;
+}
+
+
+/* ---------- RESPONSIVE (CELU) ---------- */
+/* Botón hamburguesa (oculto en PC) */
+.menu-toggle {
+    display: none; /* en mobile se muestra */
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    margin: 4px 0;
+    background: #f7f7f7;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* Panel mobile deslizable */
+.mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: none;          /* se muestra al abrir */
+    z-index: 40;
+}
+
+.mobile-menu.show {
+    display: block;
+}
+
+.mobile-menu nav {
+    background: #111;
+    width: 70%;
+    max-width: 260px;
+    height: 100%;
+    padding: 1.5rem 1rem;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.4);
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+}
+
+/* cuando el contenedor tiene show, empuja el panel */
+.mobile-menu.show nav {
+    transform: translateX(0);
+}
+
+.mobile-menu a,
+.mobile-menu button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.5rem 0;
+    border: none;
+    background: transparent;
+    color: #f7f7f7;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.mobile-menu button {
+    cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+    .hero {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+    }
+    .hero-title {
+        font-size: 1.6rem;
+    }
+    .hero-sub {
+        font-size: 0.9rem;
+    }
+
+    .nav-desktop {
+        display: none;   /* OCULTA SOLO EL MENÚ DE ESCRITORIO */
+    }
+
+    .menu-toggle {
+        display: block;  /* muestra el botón hamburguesa */
+    }
+
+    main {
+        padding-inline: 1rem;
+    }
+
+    .cal-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .panel-form {
+        display: none;  /* si querés que NO se vea el form en celu */
+    }
+
+    .calendar,
+    .panel-form {
+        padding: 0.8rem;
+    }
+
+    table.cal {
+        font-size: 0.8rem;
+    }
+
+    table.cal td {
+        height: 2rem;
+    }
+}
