@@ -34,12 +34,14 @@
         </nav>
 
         <!-- BOTÓN HAMBURGUESA (SOLO CELU POR CSS) -->
-        <button class="burger" id="burger-btn">
+        <button class="menu-toggle" id="burger-btn">
             <span></span><span></span><span></span>
         </button>
     </div>
 
-    <!-- MENÚ MOBILE DESPLEGABLE -->
+    
+</header>
+<!-- MENÚ MOBILE DESPLEGABLE -->
     <div class="mobile-menu" id="mobile-menu">
         <nav>
             <a href="{% url 'turnos' %}">Inicio</a>
@@ -55,7 +57,6 @@
             {% endif %}
         </nav>
     </div>
-</header>
 
 <main>
     {% block content %}{% endblock %}
@@ -66,21 +67,26 @@
 </footer>
 
 <script>
-    const burgerBtn = document.getElementById('burger-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
+    document.addEventListener('DOMContentLoaded', () => {
+        const burgerBtn = document.getElementById('burger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-    if (burgerBtn && mobileMenu) {
-        burgerBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('open');
-        });
+        if (burgerBtn && mobileMenu) {
+            // abrir / cerrar menú
+            burgerBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('show');   // 👈 antes decía 'open'
+            });
 
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                mobileMenu.classList.remove('open');
-            }
-        });
-    }
+            // cerrar si tocás un link o el fondo oscuro
+            mobileMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A' || e.target === mobileMenu) {
+                    mobileMenu.classList.remove('show');
+                }
+            });
+        }
+    });
 </script>
+
 
 {% block extra_js %}{% endblock %}
 </body>
