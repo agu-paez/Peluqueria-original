@@ -94,6 +94,7 @@ nav a::after {
 nav a:hover::after {
     width: 100%;
 }
+
 .link-button {
     background: none;
     border: none;
@@ -107,6 +108,8 @@ main {
     margin: 0 auto;
     padding: 1.8rem 1.5rem 3rem;
 }
+
+/* ---------- HERO ---------- */
 
 .hero {
     display: grid;
@@ -178,37 +181,7 @@ main {
     border: 1px solid #444;
 }
 
-.hero-card {
-    border-radius: 1.2rem;
-    border: 1px solid #333;
-    padding: 1.2rem 1.1rem;
-    background: radial-gradient(circle at top, #1b1b1b, #050505);
-}
-
-.hero-card h3 {
-    font-size: 0.95rem;
-    margin-bottom: 0.6rem;
-}
-
-.hero-card p {
-    font-size: 0.85rem;
-    color: #bbbbbb;
-}
-
-footer {
-    border-top: 1px solid #222;
-    padding: 1rem 1.5rem 1.5rem;
-    text-align: center;
-    font-size: 0.8rem;
-    color: #777;
-}
-
-footer a {
-    color: var(--gold);
-    text-decoration: none;
-}
-
-/* ---------- CALENDARIO Y FORM PANEL ---------- */
+/* ---------- FORM + CALENDARIO ---------- */
 
 .cal-container {
     margin-top: 1rem;
@@ -266,214 +239,30 @@ table.cal td {
     vertical-align: middle;
 }
 
-table.cal td.empty {
-    cursor: default;
-}
+/* ---------- HAMBURGUESA (CORREGIDA) ---------- */
 
-table.cal td.day {
-    transition: background .15s ease, transform .1s ease;
-}
-
-table.cal td.day:hover {
-    background: #1f1f1f;
-    transform: translateY(-1px);
-}
-
-table.cal td.day.has-turnos {
-    background: rgba(241, 193, 91, .12);
-    outline: 1px solid #3b2c08;
-}
-
-table.cal td.today {
-    border: 1px solid var(--gold);
-}
-
-/* Panel formulario */
-
-.panel-form {
-    border: 1px solid #333;
-    border-radius: 1rem;
-    padding: 1rem;
-    background: #121212;
-}
-
-.panel-form h2 {
-    font-size: 1rem;
-    margin-bottom: .6rem;
-}
-
-.panel-form form {
-    font-size: .9rem;
-}
-
-.panel-form label {
-    display: block;
-    margin-top: .5rem;
-    margin-bottom: .15rem;
-    color: #cccccc;
-}
-
-.panel-form input,
-.panel-form textarea {
-    width: 100%;
-    padding: .35rem .5rem;
-    border-radius: .4rem;
-    border: 1px solid #444;
-    background: #181818;
-    color: #eee;
-    font-size: .85rem;
-}
-
-.panel-form textarea {
-    resize: vertical;
-    min-height: 60px;
-}
-
-.panel-form button {
-    margin-top: .8rem;
-    padding: .5rem 1.2rem;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-    font-size: .9rem;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: #000;
-    font-weight: 600;
-}
-
-/* Modal turnos día */
-
-.modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.65);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 50;
-}
-
-.modal-backdrop.show {
-    display: flex;
-}
-
-.modal {
-    background: #111;
-    border-radius: 1rem;
-    border: 1px solid #333;
-    max-width: 420px;
-    width: 100%;
-    padding: 1rem 1.1rem;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: .5rem;
-}
-
-.modal-title {
-    font-size: .95rem;
-    font-weight: 600;
-}
-
-.modal-close {
-    border: none;
-    background: transparent;
-    color: #aaa;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.turno-item {
-    border-radius: .5rem;
-    border: 1px solid #333;
-    padding: .4rem .6rem;
-    font-size: .85rem;
-    margin-bottom: .35rem;
-}
-
-.turno-item strong {
-    color: var(--gold);
-}
-
-.turno-empty {
-    font-size: .85rem;
-    color: #999;
-    font-style: italic;
-    margin-top: .3rem;
-}
-.btn-modal-register {
-    margin-top: 0.6rem;
-    width: 100%;
-    padding: 0.5rem 0.8rem;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-    font-size: 0.85rem;
-    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-    color: #000;
-    font-weight: 600;
-}
-
-.modal-form {
-    margin-top: 0.7rem;
-    border-top: 1px solid #333;
-    padding-top: 0.6rem;
-    display: none; /* se muestra al tocar el botón */
-}
-
-.modal-form label {
-    display: block;
-    margin-top: 0.4rem;
-    margin-bottom: 0.15rem;
-    font-size: 0.8rem;
-    color: #cccccc;
-}
-
-.modal-form input,
-.modal-form textarea {
-    width: 100%;
-    padding: 0.35rem 0.5rem;
-    border-radius: 0.4rem;
-    border: 1px solid #444;
-    background: #181818;
-    color: #eee;
-    font-size: 0.8rem;
-}
-
-.modal-form textarea {
-    resize: vertical;
-    min-height: 50px;
-}
-
-
-/* ---------- RESPONSIVE (CELU) ---------- */
-/* Botón hamburguesa (oculto en PC) */
-.menu-toggle {
-    display: none; /* en mobile se muestra */
+.burger {
+    display: none; /* default PC */
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 0.2rem;
 }
 
-.menu-toggle span {
+.burger span {
     display: block;
-    width: 20px;
+    width: 22px;
     height: 2px;
     margin: 4px 0;
     background: #f7f7f7;
-    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-/* Panel mobile deslizable */
+/* MOBILE MENU OVERLAY */
 .mobile-menu {
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.6);
-    display: none;          /* se muestra al abrir */
+    display: none;
     z-index: 40;
 }
 
@@ -492,7 +281,6 @@ table.cal td.today {
     transition: transform 0.2s ease;
 }
 
-/* cuando el contenedor tiene show, empuja el panel */
 .mobile-menu.show nav {
     transform: translateX(0);
 }
@@ -510,55 +298,28 @@ table.cal td.today {
     font-size: 0.95rem;
 }
 
-.mobile-menu button {
-    cursor: pointer;
-}
-
+/* ---------- RESPONSIVE ---------- */
 
 @media (max-width: 768px) {
+
+    .nav-desktop {
+        display: none;
+    }
+
+    .burger {
+        display: block;   /* AHORA SÍ APARECE */
+    }
+
     .hero {
         grid-template-columns: 1fr;
         gap: 1rem;
-        margin-bottom: 1.2rem;
-    }
-    .hero-title {
-        font-size: 1.6rem;
-    }
-    .hero-sub {
-        font-size: 0.9rem;
-    }
-
-    .nav-desktop {
-        display: none;   /* OCULTA SOLO EL MENÚ DE ESCRITORIO */
-    }
-
-    .menu-toggle {
-        display: block;  /* muestra el botón hamburguesa */
-    }
-
-    main {
-        padding-inline: 1rem;
     }
 
     .cal-container {
         grid-template-columns: 1fr;
-        gap: 1rem;
     }
 
     .panel-form {
-        display: none;  /* si querés que NO se vea el form en celu */
-    }
-
-    .calendar,
-    .panel-form {
-        padding: 0.8rem;
-    }
-
-    table.cal {
-        font-size: 0.8rem;
-    }
-
-    table.cal td {
-        height: 2rem;
+        display: none;
     }
 }
