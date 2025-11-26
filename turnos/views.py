@@ -4,6 +4,7 @@ import json
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
+from django.urls import reverse   # 👈 AGREGADO
 
 from .models import Turnos
 from .forms import TurnoForm
@@ -83,14 +84,18 @@ def turnos_view(request):
         fecha__month=month
     ).order_by('fecha', 'hora')
 
+    # 👇 AHORA ARMAMOS EL JSON CON id Y URLS
     turnos_por_dia = {}
     for t in turnos_qs:
         clave = t.fecha.strftime('%Y-%m-%d')
         turnos_por_dia.setdefault(clave, []).append({
+            'id': t.id,
             'hora': t.hora.strftime('%H:%M'),
             'nombre': t.nombre,
             'desc': t.desc or '',
             'sena': float(t.sena),
+            'editar_url': reverse('editar_turno', args=[t.id]),
+            'eliminar_url': reverse('eliminar_turno', args=[t.id]),
         })
 
     turnos_json = json.dumps(turnos_por_dia)
@@ -151,4 +156,3 @@ def eliminar_turno(request, turno_id):
     return render(request, 'confirmar_eliminar.html', {
         'turno': turno,
     })
-

@@ -477,12 +477,92 @@ table.cal td.day.has-turnos {
     text-decoration: none;
     font-size: 0.95rem;
 }
+/* ==========================
+   PÁGINA EDITAR TURNO
+   ========================== */
+
+.editar-turno-wrapper {
+    max-width: 480px;
+    margin: 2rem auto;
+    padding: 1.4rem 1.6rem;
+    background: #121212;
+    border-radius: 1rem;
+    border: 1px solid #333;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+.editar-turno-wrapper h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+}
+
+.editar-turno-wrapper form {
+    font-size: 0.9rem;
+}
+
+.editar-turno-wrapper label {
+    display: block;
+    margin-top: 0.5rem;
+    margin-bottom: 0.15rem;
+    color: #dddddd;
+}
+
+.editar-turno-wrapper input,
+.editar-turno-wrapper textarea,
+.editar-turno-wrapper select {
+    width: 100%;
+    padding: 0.4rem 0.55rem;
+    border-radius: 0.45rem;
+    border: 1px solid #444;
+    background: #181818;
+    color: #f7f7f7;
+    font-size: 0.9rem;
+}
+
+.editar-turno-wrapper textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* Botones guardar / cancelar */
+
+.editar-turno-actions {
+    margin-top: 0.9rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.editar-turno-actions button[type="submit"] {
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000;
+}
+
+.editar-turno-actions a {
+    font-size: 0.85rem;
+    color: #bbbbff;
+    text-decoration: none;
+}
+
+.editar-turno-actions a:hover {
+    text-decoration: underline;
+}
 
 /* ==========================
    RESPONSIVE (MOBILE)
    ========================== */
 
 @media (max-width: 768px) {
+    .editar-turno-wrapper {
+        margin: 1.4rem 0.8rem;
+        padding: 1.1rem 1.2rem;
+    }
 
     .nav-desktop {
         display: none;

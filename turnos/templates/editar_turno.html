@@ -3,13 +3,23 @@
 {% block title %}Editar turno · Peluquería Ivon{% endblock %}
 
 {% block content %}
-<h1>Editar turno</h1>
+<div class="editar-turno-wrapper">
+    <h1>Editar turno</h1>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
 
-    <button type="submit">Guardar cambios</button>
-    <a href="/">Cancelar</a>
-</form>
+        {{ form.nombre.label_tag }}{{ form.nombre }}
+        {{ form.desc.label_tag }}{{ form.desc }}
+        {{ form.fecha.label_tag }}{{ form.fecha }}
+        {{ form.hora.label_tag }}{{ form.hora }}
+        {{ form.sena.label_tag }}{{ form.sena }}
+
+        <div class="editar-turno-actions">
+            <button type="submit">Guardar cambios</button>
+            <a href="/">Cancelar</a>
+        </div>
+    </form>
+</div>
 {% endblock %}
