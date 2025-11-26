@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect
 from datetime import date
 import calendar
 import json
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import user_passes_test
+
 from .models import Turnos
 from .forms import TurnoForm
+
 MESES_ES = [
-    "",  # placeholder para indexar desde 1
+    "",
     "Enero",
     "Febrero",
     "Marzo",
@@ -95,7 +98,7 @@ def turnos_view(request):
     context = {
         'year': year,
         'month': month,
-        'month_name': MESES_ES[month],   # <- meses en español
+        'month_name': MESES_ES[month],
         'weeks': weeks,
         'form': form,
         'turnos_json': turnos_json,
@@ -103,7 +106,49 @@ def turnos_view(request):
         'prev_month': prev_month,
         'next_year': next_year,
         'next_month': next_month,
-        'puede_editar': puede_editar,    # <- lo usamos en el template
+        'puede_editar': puede_editar,
+        'turnos_mes': turnos_qs,   # para la tabla de administración
     }
     return render(request, 'turnos.html', context)
+
+
+# ======== PERMISOS PARA EDITAR / ELIMINAR (solo staff) =========
+
+def es_staff(user):
+    return user.is_authenticated and user.is_staff
+
+
+@user_passes_test(es_staff)
+def editar_turno(request, turno_id):
+    turno = get_object_or_404(Turnos, pk=turno_id)
+
+    if request.method == 'POST':
+        form = TurnoForm(request.POST, instance=turno)
+        if form.is_valid():
+            form.save()
+            year = turno.fecha.year
+            month = turno.fecha.month
+            return redirect(f"/?year={year}&month={month}")
+    else:
+        form = TurnoForm(instance=turno)
+
+    return render(request, 'editar_turno.html', {
+        'form': form,
+        'turno': turno,
+    })
+
+
+@user_passes_test(es_staff)
+def eliminar_turno(request, turno_id):
+    turno = get_object_or_404(Turnos, pk=turno_id)
+
+    if request.method == 'POST':
+        year = turno.fecha.year
+        month = turno.fecha.month
+        turno.delete()
+        return redirect(f"/?year={year}&month={month}")
+
+    return render(request, 'confirmar_eliminar.html', {
+        'turno': turno,
+    })
 
