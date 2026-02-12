@@ -18,7 +18,9 @@
 
         <div class="editar-turno-actions">
             <button type="submit">Guardar cambios</button>
-            <a href="/">Cancelar</a>
+            <a href="{% url 'turnos' %}?year={{ turno.fecha|date:'Y' }}&month={{ turno.fecha|date:'n' }}">
+                Cancelar
+            </a>
         </div>
     </form>
 </div>

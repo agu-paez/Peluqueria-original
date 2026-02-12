@@ -10,6 +10,9 @@
         {% csrf_token %}
         {{ form.non_field_errors }}
 
+        <!-- 👇 Campo oculto para volver a la misma página -->
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+
         <div style="margin-bottom:0.7rem;">
             <label for="{{ form.username.id_for_label }}">Usuario</label><br>
             {{ form.username }}
@@ -26,3 +29,4 @@
     </form>
 </main>
 {% endblock content %}
+

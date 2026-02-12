@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{% static 'img/logo.ico' %}" type="image/x-icon">
     <title>{% block title %}Peluquería Ivon{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/estilos.css' %}">
 </head>
@@ -11,7 +12,9 @@
 <header class="site-header">
     <div class="navbar">
         <div class="brand">
-            <div class="brand-logo">IB</div>
+            <div class="brand-logo">
+                <img src="{% static 'img/logo_nuevo.png' %}" alt="Logo Ivon Bodnar">
+            </div>
             <div class="brand-text">
                 <span>PELUQUERÍA</span>
                 <span>Ivon Bodnar</span>
@@ -20,51 +23,68 @@
 
         <!-- MENÚ DESKTOP -->
         <nav class="nav-desktop">
-            <a href="{% url 'turnos' %}">Inicio</a>
-            <a href="#">Servicios</a>
+            <a href="{% url 'inicio' %}">Inicio</a>
+            <!--<a href="#">Servicios</a>-->
             <a href="{% url 'turnos' %}">Turnos</a>
-            <a href="#">Contacto</a>
 
             {% if user.is_authenticated %}
-                <span class="nav-user">Hola, {{ user.username }}</span>
-                <a href="{% url 'logout' %}">Salir</a>
+            <div class="nav-user-box">
+                <span class="nav-user-pill">
+                    👤 <span class="nav-user">{{ user.username }}</span>
+                </span>
+                <!-- 👇 le pasamos ?next=URL actual -->
+                <a href="{% url 'logout' %}?next={{ request.path }}" class="nav-logout">Salir</a>
+            </div>
             {% else %}
-                <a href="{% url 'login' %}">Ingresar</a>
+            <div class="nav-user-box">
+                <!-- 👇 lo mismo para login -->
+                <a href="{% url 'login' %}?next={{ request.path }}" class="nav-logout">Ingresar</a>
+            </div>
             {% endif %}
         </nav>
+
+
 
         <!-- BOTÓN HAMBURGUESA (SOLO CELU POR CSS) -->
         <button class="menu-toggle" id="burger-btn">
             <span></span><span></span><span></span>
         </button>
     </div>
-
-    
 </header>
+
 <!-- MENÚ MOBILE DESPLEGABLE -->
     <div class="mobile-menu" id="mobile-menu">
         <nav>
-            <a href="{% url 'turnos' %}">Inicio</a>
-            <a href="#">Servicios</a>
+            <a href="{% url 'inicio' %}">Inicio</a>
+           <!-- <a href="#">Servicios</a>-->
             <a href="{% url 'turnos' %}">Turnos</a>
-            <a href="#">Contacto</a>
 
             {% if user.is_authenticated %}
-                <span class="nav-user">Hola, {{ user.username }}</span>
-                <a href="{% url 'logout' %}">Salir</a>
+            <div class="nav-user-box">
+                <span class="nav-user-pill">
+                    👤 <span class="nav-user">{{ user.username }}</span>
+                </span>
+                <!-- 👇 le pasamos ?next=URL actual -->
+                <a href="{% url 'logout' %}?next={{ request.path }}" class="nav-logout">Salir</a>
+            </div>
             {% else %}
-                <a href="{% url 'login' %}">Ingresar</a>
+            <div class="nav-user-box">
+                <!-- 👇 lo mismo para login -->
+                <a href="{% url 'login' %}?next={{ request.path }}" class="nav-logout">Ingresar</a>
+            </div>
             {% endif %}
         </nav>
     </div>
+
 
 <main>
     {% block content %}{% endblock %}
 </main>
 
 <footer>
-    &copy; {{ now|date:"Y" }} Peluquería Ivon Bodnar
+    &copy; {% now "Y" %} Peluquería Ivon Bodnar
 </footer>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {

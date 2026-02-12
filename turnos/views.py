@@ -4,7 +4,8 @@ import json
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import user_passes_test
-from django.urls import reverse   # 👈 AGREGADO
+from django.urls import reverse
+from django.contrib.auth import logout
 
 from .models import Turnos
 from .forms import TurnoForm
@@ -24,6 +25,10 @@ MESES_ES = [
     "Noviembre",
     "Diciembre"
 ]
+
+
+def inicio(request):
+    return render(request, "inicio.html")
 
 
 def turnos_view(request):
@@ -46,23 +51,23 @@ def turnos_view(request):
         next_month = month + 1
         next_year = year
 
-    # solo puede cargar turnos si está logueada y es staff (tu mamá)
     puede_editar = request.user.is_authenticated and request.user.is_staff
 
     # Manejo del formulario (alta de turno)
     if request.method == 'POST':
         if not puede_editar:
-            # Si no tiene permiso, ignoro el POST y redirijo
-            return redirect(f"/?year={year}&month={month}")
+            # si no tiene permiso, vuelvo a /turnos/ del mes actual
+            return redirect(f"{reverse('turnos')}?year={year}&month={month}")
 
         form = TurnoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(f"/?year={year}&month={month}")
+            # después de guardar, vuelvo a la misma página de turnos
+            return redirect(f"{reverse('turnos')}?year={year}&month={month}")
     else:
         form = TurnoForm()
 
-    # Armar calendario (semanas y días)
+    # Armar calendario
     cal = calendar.monthcalendar(year, month)
     weeks = []
     for week in cal:
@@ -84,7 +89,6 @@ def turnos_view(request):
         fecha__month=month
     ).order_by('fecha', 'hora')
 
-    # 👇 AHORA ARMAMOS EL JSON CON id Y URLS
     turnos_por_dia = {}
     for t in turnos_qs:
         clave = t.fecha.strftime('%Y-%m-%d')
@@ -112,12 +116,10 @@ def turnos_view(request):
         'next_year': next_year,
         'next_month': next_month,
         'puede_editar': puede_editar,
-        'turnos_mes': turnos_qs,   # para la tabla de administración
+        'turnos_mes': turnos_qs,
     }
     return render(request, 'turnos.html', context)
 
-
-# ======== PERMISOS PARA EDITAR / ELIMINAR (solo staff) =========
 
 def es_staff(user):
     return user.is_authenticated and user.is_staff
@@ -133,7 +135,8 @@ def editar_turno(request, turno_id):
             form.save()
             year = turno.fecha.year
             month = turno.fecha.month
-            return redirect(f"/?year={year}&month={month}")
+            # volver al calendario de turnos del mismo mes
+            return redirect(f"{reverse('turnos')}?year={year}&month={month}")
     else:
         form = TurnoForm(instance=turno)
 
@@ -151,8 +154,15 @@ def eliminar_turno(request, turno_id):
         year = turno.fecha.year
         month = turno.fecha.month
         turno.delete()
-        return redirect(f"/?year={year}&month={month}")
+        # volver al calendario de turnos del mismo mes
+        return redirect(f"{reverse('turnos')}?year={year}&month={month}")
 
     return render(request, 'confirmar_eliminar.html', {
         'turno': turno,
     })
+
+
+def logout_view(request):
+    logout(request)
+    next_url = request.GET.get('next') or request.META.get('HTTP_REFERER') or reverse('inicio')
+    return redirect(next_url)

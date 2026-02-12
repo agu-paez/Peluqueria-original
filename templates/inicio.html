@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Inicio · Peluquería Ivon{% endblock %}
+
+{% block content %}
+
+<section class="home-hero">
+    <div class="home-hero-text">
+        <h1 class="hero-title">
+            Bienvenidos a Peluquería Ivon
+        </h1>
+        <p class="hero-sub">
+            Atención personalizada, cortes, colorimetría profesional y uñas, en un ambiente cálido y familiar.
+        </p>
+        <a href="https://wa.me/543512521669" class="btn-primary">
+            Reservar un turno
+        </a>
+    </div>
+
+    <div class="home-hero-images">
+        <img src="{% static 'img/imagen_corte.png' %}" class="hero-img" 
+             alt="Peluquería Ivon">
+        <img src="{% static 'img/imagen_tintura.png' %}" class="hero-img" 
+             alt="Peluquería Ivon interior">
+    </div>
+</section>
+
+<section class="home-panels">
+    <div class="home-panel-card">
+        <h2>Nuestra misión</h2>
+        <p>
+            Brindar a cada cliente una experiencia única, combinando técnicas profesionales,
+            productos de calidad y un trato cercano. Queremos que cada persona que entre a la
+            peluquería se vaya renovada, segura y contenta con su imagen.
+        </p>
+    </div>
+
+    <div class="home-panel-card">
+        <h2>Un poco de nuestra historia</h2>
+        <p>
+            Peluquería Ivon nació como un emprendimiento familiar, creciendo a fuerza de
+            dedicación, capacitación constante y mucho amor por este trabajo. Hoy seguimos
+            apostando a mejorar cada día, sumando nuevos servicios y tendencias para nuestras
+            clientas y clientes.
+        </p>
+    </div>
+</section>
+
+<section class="home-contact">
+    <h2 class="home-contact-title">Contacto</h2>
+    <div class="home-contact-grid">
+        <div class="contact-item">
+            <h3>📱 WhatsApp</h3>
+            <p>
+                <a href="https://wa.me/543512521669" target="_blank" class="contact-link">
+                    +54 9 351 252166
+                </a>
+            </p>
+        </div>
+        <div class="contact-item">
+            <h3>📸 Instagram</h3>
+            <p>
+                <a href="https://www.instagram.com/peluqueriaivon5/" target="_blank" class="contact-link">
+                    @peluqueria.ivon
+                </a>
+            </p>
+        </div>
+        <div class="contact-item">
+            <h3>📘 Facebook</h3>
+            <p>
+                <a href="https://www.facebook.com/share/1JfRKxzPaT/" target="_blank" class="contact-link">
+                    Peluquería Ivon
+                </a>
+            </p>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
