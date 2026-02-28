@@ -25,6 +25,8 @@ ALLOWED_HOSTS = ["*"]   # luego lo ajustamos, pero así FUNCIONA seguro
 # =======================
 #      APPLICATIONS
 # =======================
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -33,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
+    'ventas',
     'turnos',
 ]
 
@@ -132,6 +134,13 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Configuración para enviar correos (puedes usar variables de entorno para seguridad)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'aguspronahu11@gmail.com'
+EMAIL_HOST_PASSWORD = 'njvm iwpo nyyk muav' 
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'

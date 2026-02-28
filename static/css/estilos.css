@@ -62,13 +62,13 @@ header.site-header {
 
 .nav-logout {
     font-size: 0.9rem;
-    color: #ff8080;            /* rojo suave elegante */
+    color: #ffbb00;;            /* rojo suave elegante */
     text-decoration: none;
     transition: 0.2s;
 }
 
 .nav-logout:hover {
-    color: #ff4c4c;
+    color: #ffbb00;
     text-decoration: underline;
 }
 .nav-desktop {
@@ -874,3 +874,22 @@ table.cal td.day.has-turnos {
     border: 1px solid #333;
 }
 
+/* ==========================
+   ESTADOS DE DISPONIBILIDAD (SEMÁFORO)
+   ========================== */
+
+/* Forzado de colores para el semáforo */
+td.day.disponible-verde { background-color: rgba(40, 167, 69, 0.2) !important; color: #98ffad !important; }
+td.day.medio-amarillo { background-color: rgba(241, 193, 91, 0.25) !important; color: #f1c15b !important; }
+td.day.ocupado-rojo { background-color: rgba(220, 53, 69, 0.35) !important; color: #ff8a94 !important; }
+/* Selecciona la última celda (domingo) de cada fila en el cuerpo de la tabla */
+table.cal tbody tr td:last-child {
+    background-color: rgba(220, 53, 69, 0.15) !important; /* Rojo sutil */
+    color: #ff8a94 !important;
+    cursor: not-allowed !important; /* Cambia el puntero para indicar bloqueo */
+}
+
+/* También pintamos el encabezado "Dom" */
+table.cal thead tr th:last-child {
+    color: #ff8a94;
+}

@@ -125,99 +125,230 @@
 </div>
 
 <script>
+    /* =========================================
+       1) CARGA DE DATOS DESDE DJANGO A JS
+       ========================================= */
+
+    // turnos_json llega desde Django como texto JSON.
+    // escapejs evita que se rompa el script si hay comillas/acentos/etc.
+    // JSON.parse lo convierte a objeto JS:
+    // TURNOS = { "2026-02-20": [ {...}, {...} ], "2026-02-21": [...] }
     const TURNOS = JSON.parse(`{{ turnos_json|escapejs }}`);
 
+
+    /* =========================================
+       2) REFERENCIAS A ELEMENTOS DEL DOM (HTML)
+       ========================================= */
+
+    // Modal principal donde se muestran los turnos del día
     const modal = document.getElementById('modal-turnos');
+
+    // Contenedor donde se inyecta HTML con los turnos o mensajes
     const modalBody = document.getElementById('modal-body');
+
+    // Título del modal (ej: "Estado para el día 20/02/2026")
     const modalTitle = document.getElementById('modal-title');
+
+    // Botón para cerrar modal
     const btnClose = document.getElementById('btn-close-modal');
 
+    // Input lateral (fuera del modal) donde se setea la fecha elegida (si existe)
     const inputFechaLateral = document.querySelector('input[name="fecha"]');
-    const modalFechaInput   = document.getElementById('modal-fecha-input');
-    const btnOpenFormModal  = document.getElementById('btn-open-form-modal');
+
+    // Input dentro del modal donde también se setea la fecha (si existe)
+    const modalFechaInput = document.getElementById('modal-fecha-input');
+
+    // Botón "Registrar" (abre el form dentro del modal)
+    const btnOpenFormModal = document.getElementById('btn-open-form-modal');
+
+    // Contenedor del formulario en el modal (se oculta/muestra)
     const modalFormContainer = document.getElementById('modal-form-container');
 
-    // marcar días y setear eventos
+
+    /* =========================================
+       3) CONFIGURACIONES DE NEGOCIO
+       ========================================= */
+
+    // Cupo máximo por día (lo usás para calcular disponibilidad)
+    const CUPO_MAXIMO = 4;
+
+    // Función que devuelve un mensaje según la cantidad disponible
+    const msjDisponibilidad = (n) => {
+        if (n <= 0) return "🚫 ¡Día completo! No quedan turnos.";
+        if (n === 1) return "⚠️ ¡Cuidado! Solo queda 1 turno disponible.";
+        return `✅ Quedan ${n} turnos disponibles.`;
+    };
+
+
+    /* =========================================
+       4) SEMÁFORO DE COLORES + CLICK EN CADA DÍA
+       ========================================= */
+
+    // Recorremos todas las celdas del calendario que representan días
     document.querySelectorAll('td.day').forEach(td => {
+        // Cada td tiene data-fecha="YYYY-MM-DD"
         const fecha = td.dataset.fecha;
 
-        if (TURNOS[fecha]) {
-            td.classList.add('has-turnos');
+        // Detectamos si la celda es domingo:
+        // cellIndex = posición en la fila (0..6). Si es 6 => domingo.
+        const esDomingo = td.cellIndex === 6;
+
+        // Traemos la lista de turnos para esa fecha. Si no existe, lista vacía.
+        const listaTurnos = TURNOS[fecha] || [];
+        const cantidad = listaTurnos.length;
+
+        // Siempre limpiamos clases previas para evitar que queden residuos
+        td.classList.remove('has-turnos', 'disponible-verde', 'medio-amarillo', 'ocupado-rojo');
+
+        // Si es domingo, no aplicamos colores ni abrimos modal de turnos:
+        // mostramos alerta y salimos.
+        if (esDomingo) {
+            td.addEventListener('click', (e) => {
+                e.preventDefault();
+                alert("Los domingos la peluquería permanece cerrada.");
+            });
+            return; // importante: no ejecuta el resto
         }
 
-        td.addEventListener('click', () => {
-            if (inputFechaLateral) inputFechaLateral.value = fecha;
-            if (modalFechaInput)   modalFechaInput.value   = fecha;
+        /* --------- LÓGICA DEL SEMÁFORO ---------
+           - Rojo: 8 o más turnos
+           - Amarillo: 5 a 7 turnos
+           - Verde: 1 a 4 turnos
+           - 0 turnos: no se pinta (o podrías poner otra clase si querés)
+        ----------------------------------------- */
 
+        if (cantidad >= 8) {
+            td.classList.add('ocupado-rojo');
+        } else if (cantidad >= 5) {
+            td.classList.add('medio-amarillo');
+        } else if (cantidad > 0) {
+            td.classList.add('disponible-verde');
+        }
+
+        // Click normal (lunes a sábado): setea la fecha en los inputs y abre modal
+        td.addEventListener('click', () => {
+            // Esto le dice al form qué fecha elegiste (para guardar turno en ese día)
+            if (inputFechaLateral) inputFechaLateral.value = fecha;
+            if (modalFechaInput)   modalFechaInput.value = fecha;
+
+            // Abre modal y muestra info del día
             mostrarTurnosDia(fecha);
         });
     });
 
+
+    /* =========================================
+       5) FUNCIÓN: MOSTRAR TURNOS DE UN DÍA EN MODAL
+       ========================================= */
+
     function mostrarTurnosDia(fecha) {
         const lista = TURNOS[fecha] || [];
-        modalTitle.textContent = `Turnos para ${fecha.split('-').reverse().join('/')}`;
+
+        // Título formateado a dd/mm/yyyy
+        modalTitle.textContent = `Estado para el día ${fecha.split('-').reverse().join('/')}`;
+
+        // Limpia contenido anterior
         modalBody.innerHTML = '';
 
-        if (lista.length === 0) {
-            const p = document.createElement('p');
-            p.className = 'turno-empty';
-            p.textContent = 'No hay turnos registrados para este día.';
-            modalBody.appendChild(p);
-        } else {
+        // Calcula cuántos turnos quedan disponibles
+        const disponibles = CUPO_MAXIMO - lista.length;
+
+        /* -----------------------------------------
+           CASO 1) USUARIO NO STAFF (lista[0].privado = true)
+           - En tu backend mandás {privado: true} para no exponer datos.
+           - Acá solo mostramos disponibilidad, no nombres/horas.
+        ----------------------------------------- */
+        if (lista.length > 0 && lista[0].privado) {
+            const textoInformativo = msjDisponibilidad(disponibles);
+
+            modalBody.innerHTML = `
+                <div class="turno-item" style="text-align: center; padding: 20px;">
+                    <p style="font-size: 1.1rem; font-weight: 600;">${textoInformativo}</p>
+                    <p style="font-size: 0.8rem; color: #aaa; margin-top: 10px;">
+                        Iniciá sesión para reservar tu lugar.
+                    </p>
+                </div>`;
+        }
+
+        /* -----------------------------------------
+           CASO 2) NO HAY TURNOS (día vacío)
+           - Para usuarios comunes: mostrás que está libre.
+        ----------------------------------------- */
+        else if (lista.length === 0) {
+            modalBody.innerHTML = `
+                <div class="turno-item" style="text-align: center; padding: 20px;">
+                    <p style="font-size: 1.1rem; font-weight: 600;">
+                        ${msjDisponibilidad(CUPO_MAXIMO)}
+                    </p>
+                </div>`;
+        }
+
+        /* -----------------------------------------
+           CASO 3) STAFF
+           - Acá lista tiene objetos con hora, nombre, desc, urls.
+           - Mostrás detalles reales y botones editar/eliminar.
+        ----------------------------------------- */
+        else {
             lista.forEach(t => {
                 const div = document.createElement('div');
                 div.className = 'turno-item';
 
-                const desc = t.desc || '';
-                let senaTexto = '';
-                if (t.sena && t.sena > 0) {
-                    senaTexto = `Seña: $${t.sena.toFixed ? t.sena.toFixed(2) : t.sena}`;
-                }
-
                 div.innerHTML = `
-                    <div>
-                        <strong>${t.hora}</strong> · ${t.nombre}
-                    </div>
-                    <div>${desc}</div>
-                    <div>${senaTexto}</div>
+                    <div><strong>${t.hora}</strong> · ${t.nombre}</div>
+                    <div>${t.desc || ''}</div>
 
                     {% if puede_editar %}
                     <div style="margin-top:6px; display:flex; gap:6px;">
                         <a href="${t.editar_url}" class="btn-link">Editar</a>
 
-                        <form action="${t.eliminar_url}" method="post"
-                              onsubmit="return confirm('¿Eliminar este turno?');">
+                        <form action="${t.eliminar_url}" method="post" onsubmit="return confirm('¿Eliminar?');">
                             {% csrf_token %}
-                            <button class="btn-danger" type="submit">Eliminar</button>
+                            <button class="btn-danger" type="submit">X</button>
                         </form>
                     </div>
                     {% endif %}
                 `;
+
                 modalBody.appendChild(div);
             });
         }
 
+        // Al abrir el modal: ocultamos el form y mostramos el botón "Registrar"
         if (modalFormContainer) modalFormContainer.style.display = 'none';
         if (btnOpenFormModal) btnOpenFormModal.style.display = 'block';
 
+        // Muestra el modal (clase CSS que lo hace visible)
         modal.classList.add('show');
     }
 
+
+    /* =========================================
+       6) CONTROLES PARA CERRAR EL MODAL
+       ========================================= */
+
+    // Cierra modal con el botón "X"
+    btnClose.addEventListener('click', () => {
+        modal.classList.remove('show');
+    });
+
+    // Cierra modal si hacés click en el fondo oscuro (afuera del cuadro blanco)
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    });
+
+
+    /* =========================================
+       7) MOSTRAR FORMULARIO DENTRO DEL MODAL
+       ========================================= */
+
+    // Cuando apretás "Registrar", se muestra el form y se oculta el botón
     if (btnOpenFormModal && modalFormContainer) {
         btnOpenFormModal.addEventListener('click', () => {
             modalFormContainer.style.display = 'block';
             btnOpenFormModal.style.display = 'none';
         });
     }
-
-    btnClose.addEventListener('click', () => {
-        modal.classList.remove('show');
-    });
-
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('show');
-        }
-    });
 </script>
 {% endblock content %}

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Productos · Peluquería Ivon{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/estilos_ventas.css' %}">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div id="cont_productos_titulo">
+    <h1>Productos Disponibles</h1>
+    <div class="titulo-enlace-contenedor">
+        {% if user.is_authenticated and user.is_staff %}
+            <a href="{% url 'crear_producto' %}" class="btn-admin">
+                ➕ Cargar Nuevo Producto
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+<div id="cont_productos">
+    {% if productos %}
+        {% for producto in productos %}
+            <div class="card-producto">
+                {% if user.is_staff %}
+                <div class="admin-actions" style="margin-top: 10px; display: flex; gap: 10px; justify-content: center;">
+                    
+                    <a href="{% url 'editar_producto' producto.id %}" 
+                    style="background-color: #f39c12; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none; font-size: 0.8rem;">
+                    ✏️ Editar
+                    </a>
+
+                    <button id="boton">🗑️ Eliminar</button>
+                    
+                </div>
+                {% endif %}
+                {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" 
+                         alt="{{ producto.nombre }}" 
+                         class="img-producto">
+                {% else %}
+                    <div class="sin-imagen">Sin Imagen</div>
+                {% endif %}
+                
+                <h1>{{ producto.nombre }}</h1>
+                <h2>${{ producto.precio }}</h2>
+                
+                <p id="stock-texto-{{ producto.id }}">
+                    {% if producto.stock <= 0 %}
+                        <span class="agotado">🚫 AGOTADO</span>
+                    {% else %}
+                        Stock disponible: {{ producto.stock }}
+                    {% endif %}
+                </p>
+
+                <button 
+                    id="btn-agregar-{{ producto.id }}"
+                    class="btn_agregar" 
+                    data-id="{{ producto.id }}"
+                    data-nombre="{{ producto.nombre }}"
+                    data-precio="{{ producto.precio }}"
+                    data-stock="{{ producto.stock }}"
+                    {% if producto.stock <= 0 %}disabled{% endif %}
+                >
+                    {% if producto.stock <= 0 %}
+                        Sin Stock
+                    {% else %}
+                        Agregar al Carrito
+                    {% endif %}
+                </button>
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="sin-productos">No hay productos cargados todavía.</p>
+    {% endif %}
+</div>
+
+<div id="icon-carrito">
+    <div class="icono">🛒</div>
+    <span id="contador-carrito">0</span>
+</div>
+
+<div id="ventana_carrito">
+    <div class="titulo-contenedor">
+        <h3 id="titulo-carrito">Tu Carrito</h3>
+        <button id="btn-cerrar">❌</button>
+    </div>
+
+    <div id="lista-carrito"></div>
+
+    <button id="btn-comprar">Finalizar Compra</button>
+    <button id="btn-limpiar">Vaciar Carrito</button>
+</div>
+
+<script src="{% static 'js/carrito.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/estilo_crear.css' %}">
+<div class="container-form">
+    <div class="card-carga">
+        <div class="card-header">
+            <h2>✨ Cargar Nuevo Producto</h2>
+            <p>Completa los datos para añadirlo a la tienda de Ivon</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" class="formulario-estilizado">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="{{ form.nombre.id_for_label }}">Nombre del Producto</label>
+                {{ form.nombre }}
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="{{ form.precio.id_for_label }}">Precio ($)</label>
+                    {{ form.precio }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.stock.id_for_label }}">Stock Inicial</label>
+                    {{ form.stock }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.descripcion.id_for_label }}">Descripción</label>
+                {{ form.descripcion }}
+            </div>
+
+            <div class="form-group">
+                <label class="label-archivo">Foto del Producto</label>
+                <div class="input-archivo-custom">
+                    {{ form.imagen }}
+                    <small>Tip: Usa imágenes cuadradas de alta calidad.</small>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-enviar">
+                🚀 Guardar Producto
+            </button>
+            
+            <a href="{% url 'lista_productos' %}" class="btn-cancelar">Volver a la lista</a>
+        </form>
+    </div>
+</div>

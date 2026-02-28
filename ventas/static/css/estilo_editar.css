@@ -1,0 +1,12 @@
+
+
+.admin-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    padding: 5px;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+}

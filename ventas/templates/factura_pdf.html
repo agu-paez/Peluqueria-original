@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page { size: A4 portrait; margin: 2cm; }
+
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            color: #444;
+        }
+
+        .container {
+            border: 1px solid #e0c27a;
+            padding: 25px;
+        }
+
+        /* Encabezado */
+        .top-bar {
+            border-bottom: 3px solid #e0c27a;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+
+        .titulo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #c5a059;
+        }
+
+        .sub {
+            font-size: 11px;
+            color: #999;
+        }
+
+        /* Bloque info */
+        .info {
+            margin-bottom: 25px;
+            padding: 10px;
+            background-color: #faf8f2;
+            border-left: 4px solid #c5a059;
+        }
+
+        .info p {
+            margin: 4px 0;
+        }
+
+        /* Tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #c5a059;
+            color: white;
+            padding: 10px;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        /* Total */
+        .total-section {
+            margin-top: 25px;
+            text-align: right;
+        }
+
+        .total-line {
+            border-top: 2px solid #c5a059;
+            margin-top: 10px;
+            padding-top: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #c5a059;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 10px;
+            color: #aaa;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="top-bar">
+        <div class="titulo">PELUQUERIA IVON</div>
+        <div class="sub">Belleza - Estilo - Profesionalismo</div>
+    </div>
+
+    <div class="info">
+        <p><strong>Cliente:</strong> {{ usuario.username }}</p>
+        <p><strong>Email:</strong> {{ usuario.email }}</p>
+        <p><strong>Fecha:</strong> {% now "d/m/Y H:i" %}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th align="left">Producto</th>
+                <th align="center">Cant.</th>
+                <th align="right">Precio</th>
+                <th align="right">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in carrito %}
+            <tr>
+                <td>{{ item.nombre }}</td>
+                <td align="center">{{ item.cantidad }}</td>
+                <td align="right">${{ item.precio }}</td>
+                <td align="right">${{ item.subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total-section">
+        <div class="total-line">
+            TOTAL: ${{ total }}
+        </div>
+    </div>
+
+    <div class="footer">
+        Gracias por confiar en nosotros ✨
+    </div>
+
+</div>
+
+</body>
+</html>
