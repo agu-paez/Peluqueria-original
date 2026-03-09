@@ -1,0 +1,292 @@
+/* ==========================
+   HOME / PÁGINA DE INICIO
+   ========================== */
+.home-hero {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.hero-title {
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+}
+
+.hero-sub {
+    color: #bbb;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: #000;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.home-hero-images {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.hero-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover; /* Cambiado a cover para mejor impacto visual */
+    border-radius: 1rem;
+    border: 1px solid var(--border, #333);
+}
+
+.home-panels {
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 4rem;
+}
+
+.home-panel-card {
+    background: #181818;
+    border: 1px solid var(--border, #333);
+    border-radius: 1rem;
+    padding: 2rem;
+}
+.home-panel-card:hover{
+    transform: scale(1.07);
+    filter: drop-shadow(0 0 5px rgba(255, 177, 9, 0.8)); 
+}
+
+.home-panel-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.home-panel-card p {
+    color: #aaa;
+    line-height: 1.6;
+}
+
+/* CONTACTO */
+.home-contact {
+    color: #ffffff;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #222;
+}
+
+.home-contact-grid {
+    color: #ffffff;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.contact-link {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* RESPONSIVE HOME */
+@media (max-width: 850px) {
+    /* Hero y Paneles se apilan */
+    .home-hero, 
+    .home-panels, 
+    .home-contact-grid {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-img { 
+        height: 200px; 
+    }
+
+    /* --- AJUSTES DEL CARRUSEL --- */
+    .carousel-container {
+        margin-top: 50px; /* Reducimos el espacio en móvil */
+        padding: 30px 0;
+    }
+
+    .card {
+        width: 160px; /* Tarjetas más chicas para que entren más en pantalla */
+        height: 160px;
+        border-radius: 15px;
+        padding: 10px;
+    }
+
+    .carousel-track {
+        gap: 20px; /* Menos espacio entre fotos */
+    }
+
+    /* Reducimos el desvanecimiento lateral para ganar espacio visual */
+    .carousel-fade-left, .carousel-fade-right {
+        width: 10vw;
+    }
+
+    /* Re-calculamos la animación para el nuevo GAP de 20px */
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-50% - 10px)); } 
+    }
+
+    /* --- AJUSTES DEL MODAL --- */
+    .modal-content {
+        max-width: 95%; /* Que ocupe casi todo el ancho en el celu */
+        max-height: 70%;
+    }
+
+    .close-modal {
+        top: 20px;
+        right: 20px;
+        font-size: 40px; /* Botón de cerrar más fácil de tocar */
+    }
+
+    .home-hero, .home-panels, .home-contact-grid {
+        grid-template-columns: 1fr !important;
+        text-align: center;
+    }
+    .hero-img { height: 200px; }
+    .home-hero-text { max-width: none; }
+}
+.carousel-container {
+  margin-top: 100px; /* Más espacio para que no esté pegado arriba */
+  background-color: #152331; 
+  padding: 60px 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 40px; /* Usamos GAP en vez de margin para precisión total */
+  width: max-content;
+  animation: scroll 25s linear infinite;
+}
+
+.card {
+  width: 220px;
+  height: 220px;
+  /* Fondo sutil para que los productos resalten sin ser un bloque blanco gigante */
+  background: rgba(255, 255, 255, 0.05); 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Efecto al pasar el mouse */
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.card img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Evita que las botellas se deformen */
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
+}
+
+/* LA SOLUCIÓN DEFINITIVA AL SALTO */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* El truco: -50% del ancho total del track MÁS la mitad del gap */
+    transform: translateX(calc(-50% - 20px)); 
+  }
+}
+
+/* Gradientes laterales para que "aparezcan" suavemente */
+.carousel-fade-left, .carousel-fade-right {
+  position: absolute;
+  top: 0;
+  width: 15vw;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.carousel-fade-left {
+  left: 0;
+  background: linear-gradient(to right, #152331, transparent);
+}
+.carousel-fade-right {
+  right: 0;
+  background: linear-gradient(to left, #152331 transparent);
+}
+/* El contenedor del modal (escondido por defecto) */
+.modal {
+  display: none; 
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* Fondo negro opaco */
+  align-items: center;
+  justify-content: center;
+}
+
+/* La imagen dentro del modal */
+.modal-content {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  transform: scale(0.8);
+  transition: transform 0.3s ease;
+}
+
+/* Cuando el modal se activa, la imagen se agranda suavemente */
+.modal.active .modal-content {
+  transform: scale(1);
+}
+
+/* Botón de cerrar */
+.close-modal {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  color: white;
+  font-size: 50px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Cambiamos el cursor en el carrusel para avisar que es clickeable */
+.card {
+  cursor: zoom-in;
+}
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 1.7rem;
+    }
+    
+    .card {
+        width: 140px;
+        height: 140px;
+    }
+}

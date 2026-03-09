@@ -10,20 +10,20 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-<div id="cont_productos_titulo">
-    <h1>Productos Disponibles</h1>
-    <div class="titulo-enlace-contenedor">
-        {% if user.is_authenticated and user.is_staff %}
-            <a href="{% url 'crear_producto' %}" class="btn-admin">
-                ➕ Cargar Nuevo Producto
-            </a>
-        {% endif %}
-    </div>
+<div class="titulo-enlace-contenedor">
+    {% if user.is_authenticated and user.is_staff %}
+        <a href="{% url 'crear_producto' %}" class="btn-admin">
+            ➕ Cargar Nuevo Producto
+        </a>
+    {% endif %}
 </div>
-
 <div id="cont_productos">
     {% if productos %}
+        <div id="cont_productos_titulo">
+            <h1>Productos Disponibles</h1>
+            
+        </div>
+
         {% for producto in productos %}
             <div class="card-producto">
                 {% if user.is_staff %}
@@ -33,8 +33,13 @@
                     style="background-color: #f39c12; color: white; padding: 5px 10px; border-radius: 5px; text-decoration: none; font-size: 0.8rem;">
                     ✏️ Editar
                     </a>
-
-                    <button id="boton">🗑️ Eliminar</button>
+                    <button class="btn btn-danger" 
+                            onclick="confirmarEliminacion({{ producto.id }}, '{{ producto.nombre|escapejs }}')">
+                        🗑️ Eliminar
+                    </button>
+                    <form id="form-eliminar-{{ producto.id }}" action="{% url 'eliminar_producto' producto.id %}" method="POST" style="display: none;">
+                        {% csrf_token %}
+                    </form>
                     
                 </div>
                 {% endif %}
@@ -93,7 +98,17 @@
 
     <div id="lista-carrito"></div>
 
-    <button id="btn-comprar">Finalizar Compra</button>
+    {% if user.is_authenticated %}
+        <button id="btn-comprar">Finalizar Compra</button>
+    {% else %}
+        <div class="mensaje-login-carrito">
+            <p>Para finalizar la compra:</p>
+            <a href="{% url 'login' %}" class="btn-login-carrito">
+                🔑 INICIAR SESIÓN
+            </a>
+        </div>
+    {% endif %}
+
     <button id="btn-limpiar">Vaciar Carrito</button>
 </div>
 

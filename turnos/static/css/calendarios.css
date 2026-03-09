@@ -1,0 +1,349 @@
+/* ==========================
+   CALENDARIO Y FORMULARIO
+   ========================== */
+.cal-container {
+    display: grid;
+    grid-template-columns: 2fr 1.4fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+.panel-form h2{
+    color: azure;
+}
+/* Para los títulos principales de la agenda */
+#cont_productos_titulo h1, .calendar h1, h1 {
+    color: #f1c15b; /* El dorado de tu botón y semáforo */
+}
+
+/* Para los nombres de los campos en el formulario (Labels) */
+.panel-form label, .panel-form .label-texto {
+    color: #f1c15b;
+}
+
+/* Para los encabezados de los días (Lun, Mar, etc.) */
+table.cal thead tr th {
+    color: #f1c15b;
+    font-weight: bold;
+}
+.calendar, .panel-form, .turnos-admin {
+    background: #1e1e1e; /* Gris oscuro, pero con más vida */
+    border: 1px solid #3a3a3a;
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+/* TABLA DEL CALENDARIO */
+table.cal {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table.cal td {
+    height: 3rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+
+
+
+/* ADMINISTRACIÓN (Respuesta a tablas cortadas) */
+.turnos-admin {
+    margin-top: 2rem;
+    overflow-x: auto; /* Permite scroll horizontal en móvil */
+}
+
+.tabla-turnos {
+    width: 100%;
+    min-width: 600px; /* Evita que se amontone en móvil */
+    border-collapse: collapse;
+}
+
+.tabla-turnos th, .tabla-turnos td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #222;
+}
+
+/* MODALES */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+}
+
+.modal-backdrop.show { display: flex; }
+
+.modal {
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 90%;
+    max-width: 450px;
+}
+
+/* RESPONSIVE TURNOS */
+@media (max-width: 768px) {
+    .cal-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .panel-form {
+        display: none; /* Se suele ocultar porque en móvil se usa el Modal */
+    }
+
+    table.cal td {
+        height: 2.5rem;
+    }
+}
+/* ==========================
+   ESTADOS DE DISPONIBILIDAD (SEMÁFORO)
+   ========================== */
+/* Forzado de colores para el semáforo */
+td.day.disponible-verde { background-color: rgba(40, 167, 69, 0.2) !important; color: #98ffad !important; }
+td.day.medio-amarillo { background-color: rgba(241, 193, 91, 0.25) !important; color: #f1c15b !important; }
+td.day.ocupado-rojo { background-color: rgba(220, 53, 69, 0.35) !important; color: #ff8a94 !important; }
+/* Selecciona la última celda (domingo) de cada fila en el cuerpo de la tabla */
+table.cal tbody tr td:last-child {
+    background-color: rgba(220, 53, 69, 0.15) !important; /* Rojo sutil */
+    color: #ff8a94 !important;
+    cursor: not-allowed !important; /* Cambia el puntero para indicar bloqueo */
+}
+
+/* También pintamos el encabezado "Dom" */
+table.cal thead tr th:last-child {
+    color: #ff8a94;
+}
+/* Contenedor del encabezado */
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Separa las flechas a los extremos */
+    padding: 10px 5px;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #333; /* Una línea sutil para separar de los días */
+}
+
+/* El título: Mes y Año */
+.cal-title {
+    color: #f1c15b; /* Tu dorado característico */
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 12px rgba(241, 193, 91, 0.3);
+}
+
+/* Los botones de navegación (< y >) */
+.cal-nav-btn {
+    color: #f1c15b;
+    text-decoration: none; /* Adiós al subrayado azul */
+    font-size: 1.8rem;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(241, 193, 91, 0.4);
+    border-radius: 50%; /* Los hace circulares */
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efecto Hover: Cuando pasas el mouse */
+.cal-nav-btn:hover {
+    background-color: #f1c15b;
+    color: #121212; /* Fondo oscuro para el contraste */
+    box-shadow: 0 0 20px rgba(241, 193, 91, 0.5);
+    transform: scale(1.1);
+}
+
+/* Evitar que se vea morado si ya se hizo clic */
+.cal-nav-btn:visited {
+    color: #f1c15b;
+}
+/* Si la celda está vacía, quitamos el estilo de "bloqueo" */
+table.cal tbody tr td:empty {
+    background-color: transparent !important;
+    border: none !important;
+    cursor: default !important;
+}
+.edit-wrapper{
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:80vh;
+}
+
+.edit-card{
+width:420px;
+background:#0f0f0f;
+padding:30px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.6);
+}
+
+.edit-title{
+font-size:28px;
+margin-bottom:5px;
+}
+
+.edit-subtitle{
+color:#aaa;
+margin-bottom:25px;
+}
+
+.form-group{
+margin-bottom:18px;
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+.form-row{
+display:flex;
+gap:15px;
+}
+
+.form-input,
+.form-textarea{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #444;
+background:#111;
+color:white;
+}
+
+.form-textarea{
+min-height:90px;
+resize:vertical;
+}
+
+.edit-actions{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-top:20px;
+}
+
+.btn-save{
+background:#d4af37;
+border:none;
+padding:10px 18px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.btn-save:hover{
+background:#e6c65c;
+}
+
+.btn-back{
+color:#a855f7;
+text-decoration:none;
+}
+
+.btn-back:hover{
+text-decoration:underline;
+}
+.form-input,
+.form-textarea{
+width:100%;
+padding:10px;
+border-radius:8px;
+border:1px solid #444;
+background:#111;
+color:white;
+box-sizing:border-box;
+}
+
+.form-textarea{
+min-height:100px;
+resize:vertical;
+}
+.turno-item{
+background:#111;
+border:1px solid #222;
+border-radius:10px;
+padding:12px;
+margin-bottom:12px;
+}
+
+.turno-header{
+display:flex;
+gap:8px;
+font-weight:600;
+margin-bottom:4px;
+}
+
+.turno-hora{
+color:#fbbf24;
+}
+
+.turno-nombre{
+color:#fff;
+}
+
+.turno-desc{
+color:#aaa;
+font-size:14px;
+margin-bottom:8px;
+}
+
+.turno-actions{
+display:flex;
+gap:8px;
+}
+
+.btn-editar{
+background:#7c3aed;
+color:white;
+padding:4px 10px;
+border-radius:6px;
+text-decoration:none;
+font-size:13px;
+}
+
+.btn-eliminar{
+background:#dc2626;
+color:white;
+border:none;
+padding:4px 10px;
+border-radius:6px;
+cursor:pointer;
+}
+.modal-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.modal-title{
+font-size:20px;
+font-weight:600;
+color:white;
+}
+
+.modal-close{
+background:none;
+border:none;
+font-size:24px;
+color:#aaa;
+cursor:pointer;
+padding:0;
+line-height:1;
+}
+
+.modal-close:hover{
+color:white;
+}

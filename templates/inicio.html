@@ -5,6 +5,11 @@
 
 {% block content %}
 
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/inicio_cs.css' %}">
+
+
+
 <section class="home-hero">
     <div class="home-hero-text">
         <h1 class="hero-title">
@@ -46,6 +51,26 @@
         </p>
     </div>
 </section>
+<div class="carousel-container">
+  <div class="carousel-fade-left"></div>
+  <div class="carousel-fade-right"></div>
+
+  <div class="carousel-track">
+    <div class="card"><img src="{% static 'img/deco1.jpeg' %}" alt="Logo"></div>
+    <div class="card"><img src="{% static 'img/deco-corte.jpeg' %}" alt="Producto"></div>
+    <div class="card"><img src="{% static 'img/peinado-deco.jpeg' %}" alt="Shampoo"></div>
+    <div class="card"><img src="{% static 'img/trabajo-deco.jpeg' %}" alt="Cera"></div>
+    
+    <div class="card"><img src="{% static 'img/deco1.jpeg' %}" alt="Logo"></div>
+    <div class="card"><img src="{% static 'img/deco-corte.jpeg' %}" alt="Producto"></div>
+    <div class="card"><img src="{% static 'img/peinado-deco.jpeg' %}" alt="Shampoo"></div>
+    <div class="card"><img src="{% static 'img/trabajo-deco.jpeg' %}" alt="Cera"></div>
+  </div>
+</div>
+<div id="imageModal" class="modal">
+  <span class="close-modal">&times;</span>
+  <img class="modal-content" id="fullImage">
+</div>
 
 <section class="home-contact">
     <h2 class="home-contact-title">Contacto</h2>
@@ -76,5 +101,6 @@
         </div>
     </div>
 </section>
+<script src="{% static 'js/java_sc_inicio.js' %}"></script>
 
 {% endblock content %}

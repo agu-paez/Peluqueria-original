@@ -13,12 +13,16 @@ body{
 
 #cont_productos_titulo h1{
     font-family: Georgia, serif;
+    background: #f1d592;;
     font-style: italic;
     font-size: 3.2rem;
-    color: #c5a059;
+    color: #152331;
     letter-spacing: 2px;
     text-shadow: 0 5px 25px rgba(197,160,89,0.3);
     margin: 0;
+    border-radius: 20px;
+    padding: 10px 25px;
+    display: inline-block;
 }
 
 .titulo-enlace-contenedor{
@@ -282,4 +286,36 @@ body{
 
 #btn-cerrar:hover{
     transform: scale(1.2);
+}
+/* Estilos para resaltar el inicio de sesión en el carrito */
+.mensaje-login-carrito {
+    text-align: center;
+    padding: 20px 10px;
+    background-color: #fff4f4; /* Un fondo suave para resaltar */
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.mensaje-login-carrito p {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.btn-login-carrito {
+    display: inline-block;
+    background-color: #004289; /* Azul profesional */
+    color: white !important;
+    padding: 15px 25px; /* Aquí le damos el tamaño "grande" */
+    font-size: 1.2rem;   /* Texto más grande */
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.btn-login-carrito:hover {
+    background-color: #002d5e;
+    transform: scale(1.05); /* Efecto de crecimiento al pasar el mouse */
 }

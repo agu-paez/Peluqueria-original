@@ -3,6 +3,9 @@
 {% block title %}Turnos · Peluquería Ivon{% endblock %}
 
 {% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/calendarios.css' %}">
+
 <section class="hero">
     <div>
         <div class="hero-badge">
@@ -294,16 +297,22 @@
                 div.className = 'turno-item';
 
                 div.innerHTML = `
-                    <div><strong>${t.hora}</strong> · ${t.nombre}</div>
-                    <div>${t.desc || ''}</div>
+                    <div class="turno-header">
+                        <span class="turno-hora">${t.hora}</span>
+                        <span class="turno-nombre">${t.nombre}</span>
+                    </div>
+
+                    <div class="turno-desc">
+                        ${t.desc || ''}
+                    </div>
 
                     {% if puede_editar %}
-                    <div style="margin-top:6px; display:flex; gap:6px;">
-                        <a href="${t.editar_url}" class="btn-link">Editar</a>
+                    <div class="turno-actions">
+                        <a href="${t.editar_url}" class="btn-editar">Editar</a>
 
                         <form action="${t.eliminar_url}" method="post" onsubmit="return confirm('¿Eliminar?');">
                             {% csrf_token %}
-                            <button class="btn-danger" type="submit">X</button>
+                            <button class="btn-eliminar" type="submit">Eliminar</button>
                         </form>
                     </div>
                     {% endif %}

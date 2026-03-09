@@ -140,7 +140,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'aguspronahu11@gmail.com'
-EMAIL_HOST_PASSWORD = 'njvm iwpo nyyk muav' 
+EMAIL_HOST_PASSWORD = '' 
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'

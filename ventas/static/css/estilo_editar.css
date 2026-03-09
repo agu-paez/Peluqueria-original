@@ -1,12 +1,128 @@
+/* Importar fuente elegante */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
 
+:root {
+    --negro-fondo: #0a0a0a;
+    --dorado: #d4af37;
+    --naranja-accent: #f39c12;
+    --blanco-tarjeta: #ffffff;
+    --texto-oscuro: #222222;
+    --azul-boton: #004085; /* El azul que tienes en el botón actual */
+}
 
-.admin-actions {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 5;
-    background: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
-    padding: 5px;
-    border-radius: 8px;
-    backdrop-filter: blur(4px);
+body {
+    background-color: #f0f2f5; /* Fondo gris claro para que resalte la tarjeta */
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+}
+
+.container-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    padding: 20px;
+}
+
+.card-carga {
+    background: var(--blanco-tarjeta);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 450px;
+    border-top: 5px solid var(--dorado); /* Detalle de peluquería */
+}
+
+h2 {
+    color: var(--texto-oscuro);
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.5rem;
+}
+
+/* --- ESTILO DE LOS CAMPOS (Django form.as_p) --- */
+
+form p {
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--texto-oscuro); /* Cambiado de blanco a oscuro para que se vea */
+    font-size: 0.85rem;
+    text-transform: uppercase;
+}
+
+/* Estilizar todos los inputs, textareas y selects */
+form input:not([type="checkbox"]), 
+form select, 
+form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Importante para que no se salgan del contenedor */
+    background-color: #fafafa;
+}
+
+form textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+form input:focus {
+    outline: none;
+    border-color: var(--dorado);
+    box-shadow: 0 0 5px rgba(212, 175, 55, 0.3);
+}
+
+/* --- BOTONES --- */
+
+.btn-enviar {
+    background-color: var(--azul-boton);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    margin-top: 10px;
+}
+
+.btn-enviar:hover {
+    background-color: #002752;
+    transform: scale(1.02);
+}
+
+a {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+a:hover {
+    color: #e74c3c;
+    text-decoration: underline;
+}
+
+/* Estilo para el link de la foto actual (Django ClearableFileInput) */
+form a {
+    display: inline;
+    color: var(--azul-boton);
+    font-weight: bold;
 }

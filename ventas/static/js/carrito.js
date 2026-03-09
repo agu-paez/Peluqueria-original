@@ -231,5 +231,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     total_Ul();
 });
+function confirmarEliminacion(id, nombre) {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Vas a eliminar el producto: " + nombre,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Si el usuario confirma, buscamos el formulario por su ID y lo enviamos
+            document.getElementById('form-eliminar-' + id).submit();
+        }
+    })
+}
 
-eliminar_prod = getElementById("boton")
+let eliminar_prod = document.getElementById("boton");

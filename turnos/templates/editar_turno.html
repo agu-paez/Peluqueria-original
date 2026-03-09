@@ -1,27 +1,67 @@
 {% extends "base.html" %}
 
-{% block title %}Editar turno · Peluquería Ivon{% endblock %}
+{% block title %}Editar turno{% endblock %}
 
 {% block content %}
-<div class="editar-turno-wrapper">
-    <h1>Editar turno</h1>
+{% load static %}
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
+<link rel="stylesheet" href="{% static 'css/calendarios.css' %}">
 
-        {{ form.nombre.label_tag }}{{ form.nombre }}
-        {{ form.desc.label_tag }}{{ form.desc }}
-        {{ form.fecha.label_tag }}{{ form.fecha }}
-        {{ form.hora.label_tag }}{{ form.hora }}
-        {{ form.sena.label_tag }}{{ form.sena }}
+<div class="edit-wrapper">
 
-        <div class="editar-turno-actions">
-            <button type="submit">Guardar cambios</button>
-            <a href="{% url 'turnos' %}?year={{ turno.fecha|date:'Y' }}&month={{ turno.fecha|date:'n' }}">
-                Cancelar
-            </a>
+  <div class="edit-card">
+
+    <h1 class="edit-title">✂️ Editar turno</h1>
+    <p class="edit-subtitle">Modificá la información del turno</p>
+
+    <form method="post" class="edit-form">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>{{ form.nombre.label }}</label>
+        {{ form.nombre }}
+      </div>
+
+      <div class="form-group">
+        <label>{{ form.desc.label }}</label>
+        {{ form.desc }}
+      </div>
+
+      <div class="form-row">
+
+        <div class="form-group">
+          <label>{{ form.fecha.label }}</label>
+          {{ form.fecha }}
         </div>
+
+        <div class="form-group">
+          <label>{{ form.hora.label }}</label>
+          {{ form.hora }}
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label>{{ form.sena.label }}</label>
+        {{ form.sena }}
+      </div>
+
+      <div class="edit-actions">
+
+        <button type="submit" class="btn-save">
+          Guardar cambios
+        </button>
+
+        <a href="{% url 'turnos' %}" class="btn-back">
+          ← Volver al calendario
+        </a>
+
+      </div>
+
     </form>
+
+  </div>
+
 </div>
+
 {% endblock %}
